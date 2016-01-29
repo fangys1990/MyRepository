@@ -10,7 +10,7 @@ import java.util.Date;
  */
 public class UserInfo {
 	
-	//test
+	//test 新的分支
 	private Integer userId;
 	private String userNumber;
 	private String userEmail;
