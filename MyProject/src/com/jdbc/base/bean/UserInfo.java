@@ -10,6 +10,7 @@ import java.util.Date;
  */
 public class UserInfo {
 	
+	//test
 	private Integer userId;
 	private String userNumber;
 	private String userEmail;
