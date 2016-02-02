@@ -10,6 +10,7 @@ import java.util.Date;
  */
 public class UserInfo {
 	
+	//test 新的分支，在remote新开分支
 	private Integer userId;
 	private String userNumber;
 	private String userEmail;
