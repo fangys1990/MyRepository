@@ -31,6 +31,13 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.springframework.jdbc-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/org.springframework.transaction-3.1.1.RELEASE.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/slf4j-api-1.7.7.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/kafka_2.10-0.8.2.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/scala-library-2.10.4.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/logback-kafka-0.1.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j-1.2.16.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/log4j-over-slf4j-1.6.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/kafka-clients-0.8.2.0.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/metrics-core-2.2.0.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="output" path="classes"/>
 </classpath>
