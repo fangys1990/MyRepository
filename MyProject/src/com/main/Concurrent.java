@@ -14,75 +14,75 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.ThreadPoolExecutor;
 /**
  * @Author Fangys
- * @Desc  concurrent°üÔ´Âë·ÖÎö
- * @Date 2016Äê2ÔÂ18ÈÕ ÏÂÎç3:42:14
+ * @Desc  concurrentåŒ…æºç åˆ†æ
+ * @Date 2016å¹´2æœˆ18æ—¥ ä¸‹åˆ3:42:14
  * @Version 1.x 
  */
 public class Concurrent {
 	/**
-	 * ×ÜµÄ½Ó¿Ú£¬ÓÃÀ´Ö´ĞĞrunnableÈÎÎñ
+	 * æ€»çš„æ¥å£ï¼Œç”¨æ¥æ‰§è¡Œrunnableä»»åŠ¡
 	 */
 	Executor executor = null;
 	/**
-	 * ÊÇExecutorµÄÀ©Õ¹½Ó¿Ú
-	 * Ö÷ÒªÀ©Õ¹ÁËÖ´ĞĞRunnable»òCallableÈÎÎñµÄ·½Ê½£¬¼°shutdownµÄ·½·¨
+	 * æ˜¯Executorçš„æ‰©å±•æ¥å£
+	 * ä¸»è¦æ‰©å±•äº†æ‰§è¡ŒRunnableæˆ–Callableä»»åŠ¡çš„æ–¹å¼ï¼ŒåŠshutdownçš„æ–¹æ³•
 	 */
 	ExecutorService executorService = null;
 	/**
-	 * ÊÇExecutorServiceµÄÀ©Õ¹½Ó¿Ú
-	 * Ö÷ÒªÀ©Õ¹ÁË¿ÉÒÔÓÃÈÎÎñµ÷¶ÈµÄĞÎÊ½£¨ÑÓ³Ù»ò¶¨ÆÚ£©Ö´ĞĞRunnable»òCallableÈÎÎñ
+	 * æ˜¯ExecutorServiceçš„æ‰©å±•æ¥å£
+	 * ä¸»è¦æ‰©å±•äº†å¯ä»¥ç”¨ä»»åŠ¡è°ƒåº¦çš„å½¢å¼ï¼ˆå»¶è¿Ÿæˆ–å®šæœŸï¼‰æ‰§è¡ŒRunnableæˆ–Callableä»»åŠ¡
 	 */
 	ScheduledExecutorService scheduledExecutorService = null;
 	/**
-	 * ÊÇExecutorService½Ó¿ÚµÄÊµÏÖÀà£¬ÊÇ³éÏóÀà
-	 * Ìá¹©Ò»Ğ©Ä¬ÈÏµÄÖ´ĞĞRunnable»òCallableÈÎÎñµÄ·½·¨
+	 * æ˜¯ExecutorServiceæ¥å£çš„å®ç°ç±»ï¼Œæ˜¯æŠ½è±¡ç±»
+	 * æä¾›ä¸€äº›é»˜è®¤çš„æ‰§è¡ŒRunnableæˆ–Callableä»»åŠ¡çš„æ–¹æ³•
 	 */
 	AbstractExecutorService abstractExecutorService = null;
 	/**
-	 * ÊÇAbstractExecutorServiceµÄ×ÓÀà£¬ÊÇÏß³Ì³ØµÄÊµÏÖ
+	 * æ˜¯AbstractExecutorServiceçš„å­ç±»ï¼Œæ˜¯çº¿ç¨‹æ± çš„å®ç°
 	 */
 	ThreadPoolExecutor threadPoolExecutor = null;
 	/**
-	 * ÊÇThreadPoolExecutorµÄ×ÓÀà£¬ÊµÏÖScheduledExecutorService½Ó¿Ú
-	 * »ùÓÚÏß³Ì³ØÄ£Ê½µÄ¶àÈÎÎñµ÷¶È£¬ÊÇTimer¹¤¾ßÀàµÄ¸ßĞÔÄÜ°æ
+	 * æ˜¯ThreadPoolExecutorçš„å­ç±»ï¼Œå®ç°ScheduledExecutorServiceæ¥å£
+	 * åŸºäºçº¿ç¨‹æ± æ¨¡å¼çš„å¤šä»»åŠ¡è°ƒåº¦ï¼Œæ˜¯Timerå·¥å…·ç±»çš„é«˜æ€§èƒ½ç‰ˆ
 	 */
 	ScheduledThreadPoolExecutor scheduledThreadPoolExecutor = null;
 	
 	/**
-	 * CallableÓëFutureÊÇRunnableµÄÁíÍâµÄĞÎÊ½£¬ÓÃÀ´Òì²½»ñÈ¡ÈÎÎñÖ´ĞĞ½á¹û
-	 * ExecutorsÊÇ¹¤¾ßÀà£¬ÓÃÓÚ´´½¨ÉÏÊö¸÷ÖÖÊµÀı
-	 * CompletionService½Ó¿Ú¿ÉÒÔÈÏÎªÊÇExecutorµÄÒ»¸ö·ÖÖ§
-	 * ×¢ÒâÕâÀïCompletionService²¢²»ÊÇExecutorµÄ×Ó½Ó¿Ú£¬
-	 * CompletionServiceÊÇÓÃÀ´½«Éú²úĞÂµÄÒì²½ÈÎÎñÓëÊ¹ÓÃÒÑÍê³ÉÈÎÎñµÄ½á¹û·ÖÀë¿ªÀ´µÄ·şÎñÓëFuture´îÅäÊ¹ÓÃ¡£
+	 * Callableä¸Futureæ˜¯Runnableçš„å¦å¤–çš„å½¢å¼ï¼Œç”¨æ¥å¼‚æ­¥è·å–ä»»åŠ¡æ‰§è¡Œç»“æœ
+	 * Executorsæ˜¯å·¥å…·ç±»ï¼Œç”¨äºåˆ›å»ºä¸Šè¿°å„ç§å®ä¾‹
+	 * CompletionServiceæ¥å£å¯ä»¥è®¤ä¸ºæ˜¯Executorçš„ä¸€ä¸ªåˆ†æ”¯
+	 * æ³¨æ„è¿™é‡ŒCompletionServiceå¹¶ä¸æ˜¯Executorçš„å­æ¥å£ï¼Œ
+	 * CompletionServiceæ˜¯ç”¨æ¥å°†ç”Ÿäº§æ–°çš„å¼‚æ­¥ä»»åŠ¡ä¸ä½¿ç”¨å·²å®Œæˆä»»åŠ¡çš„ç»“æœåˆ†ç¦»å¼€æ¥çš„æœåŠ¡ä¸Futureæ­é…ä½¿ç”¨ã€‚
 	 */
 	
 	public void testCreateExecutorPool(){
-		Executors.newFixedThreadPool(5); // ´´½¨Ò»¸ö¹Ì¶¨Ïß³ÌÊıµÄÏß³Ì³Ø
-		Executors.newScheduledThreadPool(5); // ´´½¨Ò»¸ö¿É¶ÔÏß³Ì½øĞĞÊ±¼äµ÷¶ÈµÄÏß³Ì³Ø
-		Executors.newCachedThreadPool(); // ´´½¨Ò»¸ö¿É»º³åµÄÎŞÏß³ÌÊıÁ¿½çÏŞ(Integer.MAX_VALUE)µÄÏß³Ì³Ø
-		Executors.newSingleThreadExecutor(); // ´´½¨Ò»¸ö¿É¸´ÓÃµÄµ¥Ò»Ïß³ÌµÄÏß³Ì³Ø
+		Executors.newFixedThreadPool(5); // åˆ›å»ºä¸€ä¸ªå›ºå®šçº¿ç¨‹æ•°çš„çº¿ç¨‹æ± 
+		Executors.newScheduledThreadPool(5); // åˆ›å»ºä¸€ä¸ªå¯å¯¹çº¿ç¨‹è¿›è¡Œæ—¶é—´è°ƒåº¦çš„çº¿ç¨‹æ± 
+		Executors.newCachedThreadPool(); // åˆ›å»ºä¸€ä¸ªå¯ç¼“å†²çš„æ— çº¿ç¨‹æ•°é‡ç•Œé™(Integer.MAX_VALUE)çš„çº¿ç¨‹æ± 
+		Executors.newSingleThreadExecutor(); // åˆ›å»ºä¸€ä¸ªå¯å¤ç”¨çš„å•ä¸€çº¿ç¨‹çš„çº¿ç¨‹æ± 
 	}
 	
 	/**
-	 * ÓĞ·µ»Ø½á¹û²¢ÇÒ¿ÉÄÜÅ×³öÒì³£µÄÈÎÎñ
+	 * æœ‰è¿”å›ç»“æœå¹¶ä¸”å¯èƒ½æŠ›å‡ºå¼‚å¸¸çš„ä»»åŠ¡
 	 */
 	Callable callable = null;
 	/**
-	 * ±íÊ¾Òì²½Ö´ĞĞµÄ½á¹û
+	 * è¡¨ç¤ºå¼‚æ­¥æ‰§è¡Œçš„ç»“æœ
 	 */
 	Future future = null;
 	/**
-	 * ÊµÏÖFuture¡¢RunnableµÈ½Ó¿Ú,ÊÇÒ»¸öÒì²½Ö´ĞĞµÄÈÎÎñ
-	 * ¿ÉÒÔÖ±½ÓÖ´ĞĞ£¬»ò°ü×°³ÉCallableÖ´ĞĞ
+	 * å®ç°Futureã€Runnableç­‰æ¥å£,æ˜¯ä¸€ä¸ªå¼‚æ­¥æ‰§è¡Œçš„ä»»åŠ¡
+	 * å¯ä»¥ç›´æ¥æ‰§è¡Œï¼Œæˆ–åŒ…è£…æˆCallableæ‰§è¡Œ
 	 */
 	FutureTask futureTask = null;
 	/**
-	 * ½«Éú²úĞÂµÄÒì²½ÈÎÎñÓëÊ¹ÓÃÒÑÍê³ÉÈÎÎñµÄ½á¹û·ÖÀë¿ªÀ´µÄ·şÎñ£¬
-	 * ÓÃÀ´Ö´ĞĞCallable»òRunnable£¬²¢Òì²½»ñÈ¡Ö´ĞĞ½á¹û
+	 * å°†ç”Ÿäº§æ–°çš„å¼‚æ­¥ä»»åŠ¡ä¸ä½¿ç”¨å·²å®Œæˆä»»åŠ¡çš„ç»“æœåˆ†ç¦»å¼€æ¥çš„æœåŠ¡ï¼Œ
+	 * ç”¨æ¥æ‰§è¡ŒCallableæˆ–Runnableï¼Œå¹¶å¼‚æ­¥è·å–æ‰§è¡Œç»“æœ
 	 */
 	CompletionService completionService = null;
 	/**
-	 * ÊµÏÖCompletionService½Ó¿Ú£¬Ê¹ÓÃ¹¹ÔìÊ±´«ÈëµÄExecutorÀ´Ö´ĞĞCallable»òRunnable
+	 * å®ç°CompletionServiceæ¥å£ï¼Œä½¿ç”¨æ„é€ æ—¶ä¼ å…¥çš„Executoræ¥æ‰§è¡ŒCallableæˆ–Runnable
 	 */
 	ExecutorCompletionService executorCompletionService = null;
 	
@@ -103,6 +103,8 @@ public class Concurrent {
 	
 	public static void main(String[] args) throws InterruptedException, ExecutionException {
 		test();
+		StringBuffer sb = null;
+		StringBuilder sbb = null;
 	}
 	
 }

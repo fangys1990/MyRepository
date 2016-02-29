@@ -4,8 +4,8 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 	<contextName>myProjectLog</contextName>
 
-	<property name="LOG_HOME_PATH" value="E:/home/log/myProject" />
-	<property name="LOG_REPORT_HOME_PATH" value="E:/home/log/myProject/report" />
+	<property name="LOG_HOME_PATH" value="E:/home/logs/myProject" />
+	<property name="LOG_REPORT_HOME_PATH" value="E:/home/logs/myProject/report" />
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
 		<encoder>
@@ -52,6 +52,20 @@
             <fileNamePattern>${LOG_REPORT_HOME_PATH}/myproject_report%d{yyyyMMddHH'0000.log'}</fileNamePattern>
         </rollingPolicy>
     </appender>
+    
+	<!-- <appender name="kafka" class="com.kafka.KafkaLogbackAppender">
+    	<brokerList>192.168.42.76:9092</brokerList>
+    	<topic>cloud-topic</topic>
+    	<encoder>
+            <pattern>%X{reporttime}|%X{hostip}|%X{version}|%X{priority}|%X{encoding}|%X{when}|%X{user}|%X{userip}|%X{serviceid}|%X{moduleid}|%X{portalid}|%X{method}|%X{action}|%X{thingid}|%X{thing}|%X{result}|%X{ext1}|%X{ext2}|%X{ext3}|%X{ext4}|%X{sessionid}|%X{clientstring}|%X{originid}|%X{pageid}|%X{outurl}%n</pattern>
+        </encoder>
+  	</appender> -->
+<!--   	<logger name="com.kafka" level="DEBUG">
+		<appender-ref ref="kafka" />
+	</logger> -->
+	<logger name="com.kafka" level="DEBUG">
+		<appender-ref ref="reportFile" />
+	</logger>
 
 	<root level="INFO">
 		<appender-ref ref="STDOUT" />

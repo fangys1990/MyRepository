@@ -9,11 +9,11 @@ import kafka.consumer.ConsumerIterator;
 import kafka.consumer.KafkaStream;
 import kafka.javaapi.consumer.ConsumerConnector;
 
-public class Consumer extends Thread {
+public class MyConsumer extends Thread {
 	private final ConsumerConnector consumer;
 	private final String topic;
 
-	public Consumer(String topic) {
+	public MyConsumer(String topic) {
 		consumer = kafka.consumer.Consumer
 				.createJavaConsumerConnector(createConsumerConfig());
 		this.topic = topic;
